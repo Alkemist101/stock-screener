@@ -5,20 +5,22 @@ import com.xlson.groovycsv.CsvParser
 static void main(String[] args) {
     println "Hello world!"
 
+    final boolean NORMALIZE_WEIGHT = true
     def references = ["wval", "jpgl", "avantis"]
 
     // Step 1. Load data and normalize. Apply Min-Max normalization
     Map<String, List<Record>> dataMap = new HashMap<>()
     references.each { name ->
         List<Record> records = loadCsvToRecords("${name}.csv")
-        double minWeight = records*.weight.min()
-        double maxWeight = records*.weight.max()
-        records.each { record ->
-            record.weight = (record.weight - minWeight) / (maxWeight - minWeight)
+        if (NORMALIZE_WEIGHT) {
+            double minWeight = records*.weight.min()
+            double maxWeight = records*.weight.max()
+            records.each { record ->
+                record.weight = (record.weight - minWeight) / (maxWeight - minWeight)
+            }
         }
         dataMap.put(name, records)
     }
-
 
     // Step 2. Find intersect ISIN between lists
     def intersect = dataMap
