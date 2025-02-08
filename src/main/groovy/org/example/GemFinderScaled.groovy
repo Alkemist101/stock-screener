@@ -6,7 +6,7 @@ static void main(String[] args) {
     println "Hello world!"
 
     final boolean NORMALIZE_WEIGHT = true
-    def references = ["wval", "jpgl", "avantis"]
+    def references = ["xdem", "xdeq", "jpgl", "xdev"]
 
     // Step 1. Load data and normalize. Apply Min-Max normalization
     Map<String, List<Record>> dataMap = new HashMap<>()
