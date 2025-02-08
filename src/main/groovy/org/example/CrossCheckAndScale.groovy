@@ -3,10 +3,8 @@ package org.example
 import com.xlson.groovycsv.CsvParser
 
 static void main(String[] args) {
-    println "Hello world!"
-
     final boolean NORMALIZE_WEIGHT = true
-    def references = ["xdem", "xdeq", "jpgl", "xdev"]
+    def references = ["JPGL", "IQSA", "WVAL"]
 
     // Step 1. Load data and normalize. Apply Min-Max normalization
     Map<String, List<Record>> dataMap = new HashMap<>()
@@ -67,7 +65,7 @@ static void main(String[] args) {
 // Function to load CSV file into a list of Record objects
 static def loadCsvToRecords(String fileName) {
     def records = []
-    GemFinderScaled.class.getClassLoader().getResourceAsStream(fileName).withReader { reader ->
+    CrossCheckAndScale.class.getClassLoader().getResourceAsStream(fileName).withReader { reader ->
         def parser = new CsvParser().parse([separator: ';'], reader)
         parser.each { line ->
             records << new Record(isin: line[0], weight: Double.parseDouble(line[1] - "%"))
